@@ -21,9 +21,6 @@ jobs:
       - add_ssh_keys:
           fingerprint: ["SHA256:o/Law/xoaeC8TtrnABPSfNEWNhbWYv3QefFXNMKvadA"]
       - run:
-          name: SSH into EC2
-          command: ssh -o StrictHostKeyChecking=no ec2-user@107.23.116.15
-      - run:
           name: Install Ansible
           command: |
               apk add --update ansible
