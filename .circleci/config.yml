@@ -18,19 +18,19 @@ jobs:
       - image: circleci/python:3.8-browsers
     steps:
       - checkout
-      - run:
-          name: Add Missing Public Key
-          command: |
-            apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E88979FB9B30ACF2
+      # - run:
+      #     name: Add Missing Public Key
+      #     command: |
+      #       apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E88979FB9B30ACF2
       - run:
           name: Install SSH Client
-          command: sudo apt-get update && sudo apt-get install -y openssh-client
+          command: apt-get update && apt-get install -y openssh-client
       - add_ssh_keys:
           fingerprint: ["SHA256:o/Law/xoaeC8TtrnABPSfNEWNhbWYv3QefFXNMKvadA"]
       - run:
           name: SSH into EC2
           command: |
-            ssh -o StrictHostKeyChecking=no ec2-user@107.23.116.15
+            ssh -o StrictHostKeyChecking=no ubuntu@107.23.116.15
       - run:
           name: Install Ansible
           command: |
