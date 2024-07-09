@@ -18,6 +18,9 @@ jobs:
       - image: python:3.9-alpine3.16
     steps:
       - checkout
+      - run:
+          name: Install SSH Client
+          command: sudo apt-get update && sudo apt-get install -y openssh-client
       - add_ssh_keys:
           fingerprint: ["SHA256:o/Law/xoaeC8TtrnABPSfNEWNhbWYv3QefFXNMKvadA"]
       - run:
