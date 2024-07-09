@@ -36,7 +36,7 @@ jobs:
       - run:
           name: smoke test
           command: |
-            URL="htpps://blog.udacity.com/"
+            URL="https://blog.udacity.com/"
             if curl -s --head ${URL}
             then
               return 0
@@ -51,4 +51,6 @@ workflows:
       # - configure_infrastructure:
       #     requires:
       #       - create_infrastructure
-      - smoke_test
+      - smoke_test:
+        requires:
+          - create_infrastructure
