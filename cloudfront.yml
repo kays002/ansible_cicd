@@ -17,7 +17,7 @@ Parameters:
             - Id: webpage
               DomainName: !Sub "${PipelineID}.s3.amazon.com"
               S3OriginConfig:
-                OriginAccessIdentity: 
+                OriginAccessIdentity:
                   !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
           DefaultCacheBehavior:
             TargetOriginId: webpage
