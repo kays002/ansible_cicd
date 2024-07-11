@@ -18,6 +18,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Set AWS Region
+          command: aws configure set region us-east-1
+      - run:
           name: Create Cloudfromation Stack
           command: |
               aws cloudformation deploy --template-file template.yml --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} --region us-east-1
@@ -68,6 +71,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Set AWS Region
+          command: aws configure set region us-east-1
+      - run:
           name: Execute bucket.yml
           command: |
             aws cloudformation deploy \
@@ -82,6 +88,9 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run:
+          name: Set AWS Region
+          command: aws configure set region us-east-1
       - run: yum install -y tar gzip
       - run:
           name: fetch and save the old pipeline run ID(bucket name)
@@ -99,6 +108,9 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run:
+          name: Set AWS Region
+          command: aws configure set region us-east-1
       - run:
           name: Execute cloudfront.yml
           command: |
