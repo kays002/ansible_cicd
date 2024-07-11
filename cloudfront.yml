@@ -2,31 +2,31 @@ Parameters:
   PipelineID:
     Description: Existing Bucket Name
     Type: String
-  Resources:
-    CloudFrontOriginAccessIdentity:
-      Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
-      Properties:
-        CloudFrontOriginAccessIdentityConfig:
-          Comment: 'Access identity for CloudFront distribution'
-    WebPageCDN:
-      Type: 'AWS::CloudFront::Distribution'
-      Properties:
-        DistributionConfig:
-          Enabled: true
-          Origins:
-            - Id: webpage
-              DomainName: !Sub "${PipelineID}.s3.amazon.com"
-              S3OriginConfig:
-                OriginAccessIdentity:
-                  !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
-          DefaultCacheBehavior:
-            TargetOriginId: webpage
-            ViewerProtocolPolicy: alow-all
-            ForwardedValues:
-              QueryString: false
-          DefaultRootObject: index.html
-  Outputs:
-    PipelineID:
-      Value: !Sub ${PipelineID}
-      Export:
-        Name: PipelineID
+Resources:
+  CloudFrontOriginAccessIdentity:
+    Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'Access identity for CloudFront distribution'
+  WebPageCDN:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Origins:
+          - Id: webpage
+            DomainName: !Sub "${PipelineID}.s3.amazon.com"
+            S3OriginConfig:
+              OriginAccessIdentity:
+                !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+        DefaultCacheBehavior:
+          TargetOriginId: webpage
+          ViewerProtocolPolicy: alow-all
+          ForwardedValues:
+            QueryString: false
+        DefaultRootObject: index.html
+Outputs:
+  PipelineID:
+    Value: !Sub ${PipelineID}
+    Export:
+      Name: PipelineID
