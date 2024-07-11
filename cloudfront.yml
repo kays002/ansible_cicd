@@ -21,7 +21,7 @@ Resources:
                 !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         DefaultCacheBehavior:
           TargetOriginId: webpage
-          ViewerProtocolPolicy: alow-all
+          ViewerProtocolPolicy: allow-all
           ForwardedValues:
             QueryString: false
         DefaultRootObject: index.html
