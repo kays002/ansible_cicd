@@ -74,6 +74,9 @@ jobs:
           name: Set AWS Region
           command: aws configure set region us-east-1
       - run:
+          name: Debug - Print CIRCLE_WORKFLOW_ID
+          command: echo "CIRCLE_WORKFLOW_ID=${CIRCLE_WORKFLOW_ID}"
+      - run:
           name: Execute bucket.yml
           command: |
             aws cloudformation deploy \
