@@ -153,6 +153,6 @@ workflows:
       - promote_to_production:
           requires:
             - get_last_deployment_id
-      - cleanup_old_frontend
+      - cleanup_old_frontend:
           requires:
             - get_last_deployment_id
