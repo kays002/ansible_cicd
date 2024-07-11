@@ -133,7 +133,7 @@ jobs:
           name: Destroy old s3
           command: |
             export OldBucketID=$(cat ~/textf.txt)
-            aws s3 rm "s3://$(OldBucketID)" --recursive
+            aws s3 rm "s3://${OldBucketID}" --recursive
 
 
 workflows:
