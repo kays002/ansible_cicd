@@ -15,7 +15,7 @@ Resources:
         Enabled: true
         Origins:
           - Id: webpage
-            DomainName: !Sub "${PipelineID}.s3.amazon.com"
+            DomainName: !Sub "${PipelineID}.s3.amazonaws.com"
             S3OriginConfig:
               OriginAccessIdentity:
                 !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
