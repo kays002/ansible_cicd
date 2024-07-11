@@ -36,6 +36,7 @@ jobs:
           name: Run Playbook and configure server
           command: |
               ansible-playbook -i inventory.txt main1.yml
+  
   # smoke_test:
   #   docker:
   #     - image: alpine:latest
@@ -61,6 +62,48 @@ jobs:
           command: return 1
       - destroy_environment
 
+  create_and_deploy_front_end:
+    docker:
+      image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Execute bucket.yml
+          command: |
+            aws cloudformation deploy \
+            --template-file bucket.yml \ 
+            --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
+            --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+      - run: aws s3 sync s3://mybucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
+  
+  get_last_deployment_id:
+    docker:
+      image: amazon/aws-cli
+    steps:
+      - checkout
+      - run: yum install -y tar gzip
+      - run:
+          name: fetch and save the old pipeline run ID(bucket name)
+          command: |
+            aws cloudformation \
+            list-exports --query "Exports[?Name==\`PipelineID\`].Value"\
+            --no-paginate --output text > ~/textf.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - textf.txt
+  promote_to_production:
+    docker:
+      image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Execute cloudfront.yml
+          command: |
+            aws cloudformation deploy \
+            --template-file bucket.yml \ 
+            --stack-name production-distro \
+            --parameter-overrides PipelineID="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
 
 
 workflows:
@@ -73,3 +116,4 @@ workflows:
       - smoke_test:
           requires:
             - create_infrastructure
+      - create_and_deploy_front_end
